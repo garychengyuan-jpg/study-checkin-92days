@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<title>92天學測打卡｜高大資工</title>
+<style>
+:root{--bg:#0b1220;--panel:#131e30;--panel2:#19263b;--text:#eef4ff;--muted:#9cacc4;--blue:#76a9ff;--green:#5fe0b0;--line:#2a3a53;--orange:#ffca75}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#101a2c 0%,var(--bg) 55%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 14px calc(22px + env(safe-area-inset-bottom));}
+.app{max-width:700px;margin:0 auto}.top{padding:22px 4px 14px}.eyebrow{font-size:12px;color:var(--green);font-weight:800;letter-spacing:1.5px}.top h1{font-size:27px;line-height:1.2;margin:7px 0}.sub{color:var(--muted);font-size:13px}
+.hero{background:linear-gradient(135deg,#203b64,#19283d 75%);border:1px solid #345078;border-radius:23px;padding:18px;margin:10px 0 14px;box-shadow:0 12px 30px #0003}
+.heroTop{display:flex;align-items:center;justify-content:space-between;gap:12px}.day{font-size:12px;color:#c3d8ff}.hero h2{margin:5px 0 3px;font-size:22px}.date{color:#c1cfe5;font-size:13px}.percent{font-size:29px;font-weight:850;color:var(--green)}.track{height:8px;background:#0e1b2e;border-radius:99px;overflow:hidden;margin:15px 0 8px}.fill{height:100%;width:0;background:linear-gradient(90deg,#5fe0b0,#8ce6ff);border-radius:99px;transition:width .2s}.heroFoot{display:flex;justify-content:space-between;color:#c1cfe5;font-size:12px}
+.nav{display:flex;gap:8px;margin:12px 0}.btn{border:1px solid var(--line);border-radius:13px;background:var(--panel2);color:var(--text);padding:11px 12px;font-size:14px;font-weight:700;cursor:pointer}.btn:active{transform:scale(.98)}.btn.primary{background:var(--blue);color:#091426;border-color:transparent}.nav .btn{flex:1}
+.sectionHead{display:flex;align-items:end;justify-content:space-between;margin:22px 3px 10px}.sectionHead h3{font-size:17px;margin:0}.sectionHead span{font-size:12px;color:var(--muted)}
+.tasks{display:grid;gap:10px}.task{display:flex;align-items:flex-start;gap:12px;background:var(--panel);border:1px solid var(--line);padding:14px;border-radius:17px;transition:.15s}.task.done{border-color:#286b5a;background:#112b2b}.check{appearance:none;flex:0 0 24px;width:24px;height:24px;border-radius:8px;border:2px solid #62738d;background:transparent;margin:1px 0 0;display:grid;place-items:center}.check:checked{background:var(--green);border-color:var(--green)}.check:checked:after{content:"✓";font-size:16px;font-weight:900;color:#07231c}.taskBody{flex:1;min-width:0}.subject{font-size:11px;color:var(--blue);font-weight:800;letter-spacing:.5px}.task h4{font-size:15px;margin:4px 0 5px;line-height:1.4}.task p{font-size:12px;line-height:1.55;color:var(--muted);margin:0}.mins{font-size:11px;color:var(--green);white-space:nowrap;padding-top:2px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:15px;margin-top:12px}.card h3{margin:0 0 10px;font-size:16px}.field{width:100%;background:#0d1727;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;font-size:14px;outline:none}.field:focus{border-color:var(--blue)}textarea.field{resize:vertical;min-height:85px}.saveRow{display:flex;align-items:center;gap:10px;margin-top:8px}.hint{font-size:12px;color:var(--muted);line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:13px 9px;background:var(--panel2);border-radius:14px;text-align:center}.stat strong{display:block;font-size:22px;color:var(--green)}.stat span{font-size:11px;color:var(--muted)}
+.weekList{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.weekDay{border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:9px 2px;text-align:center;font-size:11px;color:var(--muted)}.weekDay b{display:block;font-size:13px;color:var(--text);margin-bottom:4px}.weekDay.done{background:#153b35;border-color:#327c68}.weekDay.today{outline:2px solid var(--blue)}
+.footer{font-size:11px;color:#75859e;text-align:center;padding:22px 8px 8px;line-height:1.6}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#e8fff6;color:#08251c;padding:11px 16px;border-radius:99px;font-size:13px;font-weight:800;box-shadow:0 5px 25px #0005;display:none;white-space:nowrap}
+@media(min-width:600px){body{padding-top:25px}.tasks{grid-template-columns:1fr 1fr}.task{min-height:125px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="eyebrow">YOUR 92-DAY MISSION</div>
+    <h1>學測打卡計畫</h1>
+    <div class="sub">目標｜國立高雄大學・資訊工程學系</div>
+  </header>
+
+  <section class="hero">
+    <div class="heroTop">
+      <div><div class="day" id="dayLabel">DAY 1 / 92</div><h2 id="phaseTitle">今天穩穩前進</h2><div class="date" id="dateLabel"></div></div>
+      <div class="percent" id="percent">0%</div>
+    </div>
+    <div class="track"><div class="fill" id="progressFill"></div></div>
+    <div class="heroFoot"><span id="doneLabel">完成 0 / 5 項</span><span id="leftLabel">還有 92 天</span></div>
+  </section>
+
+  <div class="nav">
+    <button class="btn" id="prevBtn">‹ 前一天</button>
+    <button class="btn primary" id="todayBtn">回到今天</button>
+    <button class="btn" id="nextBtn">後一天 ›</button>
+  </div>
+
+  <div class="sectionHead"><h3>今日任務</h3><span>勾選後自動儲存</span></div>
+  <div class="tasks" id="tasks"></div>
+
+  <section class="card">
+    <h3>📈 我的打卡紀錄</h3>
+    <div class="stats">
+      <div class="stat"><strong id="streak">0</strong><span>連續完成天數</span></div>
+      <div class="stat"><strong id="totalDays">0</strong><span>有打卡的天數</span></div>
+      <div class="stat"><strong id="overall">0%</strong><span>任務完成率</span></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="sectionHead" style="margin:0 0 12px"><h3>🗓️ 本週進度</h3><span id="weekRange"></span></div>
+    <div class="weekList" id="weekList"></div>
+  </section>
+
+  <section class="card">
+    <h3>📝 今日錯題／心得</h3>
+    <textarea class="field" id="note" placeholder="例如：物理受力圖還不熟；英文閱讀錯在推論題……"></textarea>
+    <div class="saveRow"><button class="btn primary" id="saveNote">儲存今日心得</button><span class="hint" id="noteStatus">內容會保存在這台手機的瀏覽器</span></div>
+  </section>
+
+  <section class="card">
+    <h3>⚙️ 計畫設定</h3>
+    <label class="hint" for="startDate">92 天計畫開始日</label>
+    <div class="saveRow"><input class="field" id="startDate" type="date"><button class="btn" id="saveStart">更新</button></div>
+    <p class="hint">目前每天約 4 小時：數學 A 60 分、自然 70 分、英文 50 分、國文 30 分、英聽／複習 30 分。若今天較忙，先完成數學、自然、英文核心任務。</p>
+  </section>
+  <div class="footer">資料儲存在本機瀏覽器。清除網站資料或更換手機可能會使紀錄消失，建議定期保留備份。<br>把本頁加入主畫面，之後就能像 App 一樣快速開啟。</div>
+</div>
+<div class="toast" id="toast">已儲存 ✓</div>
+<script>
+const KEY='study92_mobile_v1';
+const START_DEFAULT='2026-10-22';
+const weekPlan=[
+{title:'診斷與建立基礎',math:['指數、對數觀念','多項式與方程式','函數與圖形','數列與級數','排列組合基礎','本週數學混合題','重做本週數學錯題'],sci:['物理：單位、向量、運動','物理：速度、加速度','物理：牛頓運動定律','化學：原子、電子組態','化學：週期表、元素性質','物理、化學診斷錯題','整理物理、化學公式']},
+{title:'函數、力學與化學基本觀念',math:['二次函數與極值','不等式與絕對值','指數、對數方程','三角比與三角函數','三角函數圖形','本週數學限時題組','數學錯題重做'],sci:['物理：力與平衡','物理：摩擦力、受力圖','物理：功、能量、功率','化學：莫耳、粒子數','化學：化學式與反應式','物理力學混合題','化學計算題＋公式整理']},
+{title:'數列、機率與物質變化',math:['等差、等比數列','級數與求和','排列與組合','機率基本概念','條件機率','數列、機率混合題','本週錯題重做'],sci:['物理：動量與碰撞','物理：圓周運動','物理：萬有引力','化學：化學計量','化學：限量試劑與產率','動量＋化學計量混合題','化學計算訂正']},
+{title:'統計、電學與溶液',math:['資料分析與統計','平均數、標準差','空間向量','平面與直線方程','向量與幾何綜合','數學綜合限時測驗','第 1–4 週數學錯題'],sci:['物理：電荷、電場','物理：電位、電路','物理：電流、電阻、功率','化學：溶液濃度','化學：酸鹼與 pH','物理電學＋化學溶液測驗','第 1–4 週物理、化學總複習']},
+{title:'三角、波動與酸鹼',math:['三角函數綜合題','三角形與正弦、餘弦定理','指數、對數混合題','函數變化與圖形判讀','數列應用題','數學限時題組','錯題重做'],sci:['物理：波的基本性質','物理：聲波、都卜勒效應','物理：光的反射與折射','化學：酸鹼反應','化學：酸鹼滴定、指示劑','波動＋酸鹼混合題','酸鹼計算與實驗整理']},
+{title:'向量、磁學與氧化還原',math:['平面向量內積','空間向量與幾何','直線、平面與距離','排列組合進階題','機率與條件機率','數學限時題組','錯題重做'],sci:['物理：磁場、磁力','物理：電磁感應','物理：電磁學綜合題','化學：氧化數、氧化還原','化學：氧化還原反應計算','磁學＋氧化還原題組','電磁學公式＋氧化還原整理']},
+{title:'統計、熱學與反應速率',math:['統計圖表與數據','期望值與機率應用','數學跨章節應用','函數、數列混合題','空間向量混合題','數學限時題組','數學錯題重做'],sci:['物理：溫度、熱量','物理：熱力學與氣體','物理：熱學圖表與實驗','化學：反應速率與碰撞理論','化學：化學平衡','熱學＋反應速率題組','化學平衡與實驗題']},
+{title:'數學綜合、化學平衡與生地整理',math:['二次函數、指數對數綜合','三角與向量綜合','機率、統計綜合','數學歷屆題型','弱點章節限時題','數學 A 半回模考','數學錯題重做'],sci:['物理：力學綜合','物理：電學、磁學綜合','物理：波動、熱學綜合','化學：平衡、酸鹼綜合','生物：細胞、遺傳基本題','地科：地球系統與圖表','物化生地混合題']},
+{title:'跨章節應用',math:['二次函數＋不等式混合題','指數、對數歷屆題','三角函數歷屆題','數列、機率歷屆題','向量、空間幾何歷屆題','數學 A 限時半回模考','模考錯題全部重做'],sci:['物理力學跨章','化學計量、溶液','物理電磁學','化學酸鹼、氧化還原','生物遺傳＋地科圖表','自然限時半回模考','物理、化學錯題分析']},
+{title:'第一輪完整模考',math:['函數、數列歷屆題','三角、向量歷屆題','機率、統計歷屆題','數學 A 限時整回','數學錯題補強','數學 A 完整模考','模考檢討：數學'],sci:['物理力學限時題','化學計量、酸鹼限時題','物理電學、波動','化學平衡、氧化還原','生物、地科混合題','自然完整模考','模考檢討：自然']},
+{title:'第二輪模考與弱點修正',math:['最弱單元 15 題','函數、三角混合題','向量、機率混合題','歷屆錯題','數學限時半回模考','數學 A 完整模考','全科模考檢討'],sci:['物理最弱單元','化學最弱單元','物理實驗與圖表題','化學實驗與圖表題','自然限時半回模考','自然完整模考','全科模考檢討']},
+{title:'穩定得分',math:['函數、指數對數錯題','三角函數、數列','向量、空間幾何','機率、統計','本週數學錯題重做','數學 A 限時整回','模考訂正與公式整理'],sci:['物理力學、能量','化學計量、酸鹼','物理電學、波動','化學平衡、氧化還原','生物、地科圖表題','自然限時整回','物理、化學公式總複習']},
+{title:'考前衝刺',math:['歷屆錯題','指數、對數、三角複習','向量、機率、統計複習','數學 A 限時模考','公式整理＋熟題','最重要的數學錯題','輕量複習與作息調整'],sci:['物理最常錯題','化學計量、酸鹼複習','物理電學、波動複習','化學平衡、實驗與圖表','模考錯題訂正','物理、化學公式與易錯點','自然錯題與實驗整理']}
+];
+let data={start:START_DEFAULT,checks:{},notes:{}};
+try{const raw=localStorage.getItem(KEY);if(raw)data={...data,...JSON.parse(raw)}}catch(e){}
+let selected=new Date();selected.setHours(12,0,0,0);
+const $=id=>document.getElementById(id);
+const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const parseISO=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12)};
+const addDays=(d,n)=>{let x=new Date(d);x.setDate(x.getDate()+n);return x};
+const dayNo=d=>Math.floor((d-parseISO(data.start))/86400000)+1;
+const key=()=>iso(selected);
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
+function tasksFor(d){
+ const n=dayNo(d);if(n<1||n>92)return [];
+ const wi=Math.min(12,Math.floor((n-1)/7)),di=(n-1)%7,p=weekPlan[wi];
+ const eng=['單字 20 個＋閱讀 1 篇','單字 20 個＋文意選填 1 組','單字複習＋閱讀 1 篇','單字 20 個＋篇章結構 1 組','單字複習＋閱讀 1 篇','英文限時題組 1 組','單字週測＋本週錯題訂正'][di];
+ const chi=['國文閱讀題組 1 組','古文詞義／重要字詞 20 分鐘','國文閱讀題組 1 組','古文與文化常識複習 20 分鐘','國文閱讀或非選練習 1 組','國文限時題組 1 組','本週國文錯題回顧'][di];
+ const listen=[0,1,3,4,6].includes(di)?'英聽 10 分鐘':'複習英文錯題／跟讀 5 分鐘';
+ const mc=n<=56?15:n<=84?12:8,sc=n<=28?12:n<=77?15:10;
+ const review=[28,56,70,77,84,92].includes(n)?'階段檢測：整理各科正確率與最弱單元':di===6?'週回顧：重做錯題、整理下週 3 個目標':'錯題訂正：寫下至少 3 個錯誤原因';
+ return [
+ {s:'數學 A',t:p.math[di],d:`建議 ${mc} 題；訂正至少 3 題。`,m:60},
+ {s:'自然',t:p.sci[di],d:`建議 ${sc} 題；物理／化學優先，寫出公式與觀念。`,m:70},
+ {s:'英文',t:eng,d:'記錄生字、錯誤選項與文章主旨。',m:50},
+ {s:'國文',t:chi,d:'整理錯題原因；每週至少練 1 次非選或寫作素材。',m:30},
+ {s:'英聽／收尾',t:listen,d:review,m:30}
+ ];
+}
+function showToast(msg='已儲存 ✓'){$('toast').textContent=msg;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1500)}
+function render(){
+ const n=dayNo(selected),ts=tasksFor(selected),saved=data.checks[key()]||{};
+ $('dateLabel').textContent=`${selected.getFullYear()} 年 ${selected.getMonth()+1} 月 ${selected.getDate()} 日`;
+ $('dayLabel').textContent=n<1?'計畫尚未開始':n>92?'計畫已完成':`DAY ${n} / 92`;
+ $('phaseTitle').textContent=n<1?'準備好開始了嗎？':n>92?'92 天挑戰完成！':weekPlan[Math.min(12,Math.floor((n-1)/7))].title;
+ $('leftLabel').textContent=n<1?`距開始 ${1-n} 天`:n>92?'計畫已結束':`還有 ${92-n} 天`;
+ $('tasks').innerHTML='';
+ if(!ts.length){$('tasks').innerHTML='<div class="card">這一天不在 92 天計畫內。請切換日期或修改開始日。</div>'}
+ ts.forEach((t,i)=>{
+  const done=!!saved[i],el=document.createElement('label');el.className='task'+(done?' done':'');
+  el.innerHTML=`<input class="check" type="checkbox" ${done?'checked':''} aria-label="完成${t.s}"><div class="taskBody"><div class="subject">${t.s}</div><h4>${t.t}</h4><p>${t.d}</p></div><div class="mins">${t.m} 分</div>`;
+  el.querySelector('input').addEventListener('change',e=>{data.checks[key()]??={};data.checks[key()][i]=e.target.checked;persist();render();if(e.target.checked)showToast('打卡成功 ✓')});
+  $('tasks').appendChild(el);
+ });
+ const count=ts.filter((_,i)=>saved[i]).length,pct=ts.length?Math.round(count/ts.length*100):0;
+ $('percent').textContent=pct+'%';$('progressFill').style.width=pct+'%';$('doneLabel').textContent=`完成 ${count} / ${ts.length} 項`;
+ $('note').value=data.notes[key()]||'';$('startDate').value=data.start;
+ renderStats();renderWeek();
+}
+function renderStats(){
+ let streak=0,totalDays=0,doneTasks=0,allTasks=0;
+ const today=new Date();today.setHours(12,0,0,0);
+ // Count consecutive fully completed days backward from today.
+ let cursor=today;
+ while(dayNo(cursor)>=1&&dayNo(cursor)<=92){const ts=tasksFor(cursor),ck=data.checks[iso(cursor)]||{};if(ts.length&&ts.every((_,i)=>ck[i])){streak++;cursor=addDays(cursor,-1)}else break}
+ for(let i=0;i<92;i++){const d=addDays(parseISO(data.start),i),ts=tasksFor(d),ck=data.checks[iso(d)]||{};if(ts.some((_,j)=>ck[j]))totalDays++;allTasks+=ts.length;doneTasks+=ts.filter((_,j)=>ck[j]).length}
+ $('streak').textContent=streak;$('totalDays').textContent=totalDays;$('overall').textContent=(allTasks?Math.round(doneTasks/allTasks*100):0)+'%';
+}
+function renderWeek(){
+ const n=dayNo(selected),start=addDays(selected,-((selected.getDay()+6)%7));
+ $('weekRange').textContent=`${start.getMonth()+1}/${start.getDate()} 起`;
+ $('weekList').innerHTML='';
+ ['一','二','三','四','五','六','日'].forEach((lab,i)=>{const d=addDays(start,i),ts=tasksFor(d),ck=data.checks[iso(d)]||{},done=ts.length>0&&ts.every((_,j)=>ck[j]),el=document.createElement('div');el.className='weekDay'+(done?' done':'')+(iso(d)===key()?' today':'');el.innerHTML=`<b>${d.getDate()}</b>${lab}`;el.title=done?'已完成':`完成 ${ts.filter((_,j)=>ck[j]).length}/${ts.length}`;el.addEventListener('click',()=>{selected=d;render()});$('weekList').appendChild(el)});
+}
+$('prevBtn').onclick=()=>{selected=addDays(selected,-1);render()};
+$('nextBtn').onclick=()=>{selected=addDays(selected,1);render()};
+$('todayBtn').onclick=()=>{selected=new Date();selected.setHours(12,0,0,0);render()};
+$('saveNote').onclick=()=>{data.notes[key()]=$('note').value;persist();$('noteStatus').textContent='已儲存！';showToast('心得已儲存 ✓');setTimeout(()=>$('noteStatus').textContent='內容會保存在這台手機的瀏覽器',1800)};
+$('saveStart').onclick=()=>{const v=$('startDate').value;if(!v)return;data.start=v;persist();render();showToast('開始日期已更新')};
+render();
+</script>
+</body>
+</html>
